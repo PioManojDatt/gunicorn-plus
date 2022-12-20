@@ -53,9 +53,9 @@ callable that should be found in the specified module.
 Example with test app::
 
     $ cd examples
-    $ gunicorn --workers=2 test:app
+    $ gunicorn --workers=2 test:app --reload --reload-watch-file /config/stst.json
 
-
+# Monitor specifig dir change and reload server worker
 Contributing
 ------------
 
