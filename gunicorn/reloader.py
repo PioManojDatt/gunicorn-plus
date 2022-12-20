@@ -26,11 +26,13 @@ class Reloader(threading.Thread):
         self._extra_files.add(filename)
 
     def get_files(self):
-        fnames = [
-            COMPILED_EXT_RE.sub('py', module.__file__)
-            for module in tuple(sys.modules.values())
-            if getattr(module, '__file__', None)
-        ]
+        fnames = []
+        if not self._extra_files:
+            fnames = [
+                COMPILED_EXT_RE.sub('py', module.__file__)
+                for module in tuple(sys.modules.values())
+                if getattr(module, '__file__', None)
+            ]
 
         fnames.extend(self._extra_files)
 
@@ -78,8 +80,9 @@ if has_inotify:
             self._callback = callback
             self._dirs = set()
             self._watcher = Inotify()
+            self._extra_files = extra_files
 
-            for extra_file in extra_files:
+            for extra_file in self._extra_files:
                 self.add_extra_file(extra_file)
 
         def add_extra_file(self, filename):
@@ -92,11 +95,14 @@ if has_inotify:
             self._dirs.add(dirname)
 
         def get_dirs(self):
-            fnames = [
-                os.path.dirname(os.path.abspath(COMPILED_EXT_RE.sub('py', module.__file__)))
-                for module in tuple(sys.modules.values())
-                if getattr(module, '__file__', None)
-            ]
+            if self._extra_files:
+                fnames = [ file for file in self._dirs ]
+            else:
+                fnames = [
+                    os.path.dirname(os.path.abspath(COMPILED_EXT_RE.sub('py', module.__file__)))
+                    for module in tuple(sys.modules.values())
+                    if getattr(module, '__file__', None)
+                ]
 
             return set(fnames)
 
