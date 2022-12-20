@@ -939,10 +939,10 @@ class ReloadEngine(Setting):
 
 
 class ReloadExtraFiles(Setting):
-    name = "reload_extra_files"
+    name = "reload_watch_files"
     action = "append"
     section = "Debugging"
-    cli = ["--reload-extra-file"]
+    cli = ["--reload-watch-file"]
     meta = "FILES"
     validator = validate_list_of_existing_files
     default = []
