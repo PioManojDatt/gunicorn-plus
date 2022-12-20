@@ -95,9 +95,8 @@ if has_inotify:
             self._dirs.add(dirname)
 
         def get_dirs(self):
-            if self._extra_files:
-                fnames = [ file for file in self._dirs ]
-            else:
+            fnames = []
+            if not self._extra_files:
                 fnames = [
                     os.path.dirname(os.path.abspath(COMPILED_EXT_RE.sub('py', module.__file__)))
                     for module in tuple(sys.modules.values())
