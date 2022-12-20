@@ -105,12 +105,12 @@ Valid engines are:
 
 .. versionadded:: 19.7
 
-.. _reload-extra-files:
+.. _reload-watch-files:
 
-``reload_extra_files``
+``reload_watch_files``
 ~~~~~~~~~~~~~~~~~~~~~~
 
-**Command line:** ``--reload-extra-file FILES``
+**Command line:** ``--reload-watch-file FILES``
 
 **Default:** ``[]``
 
