@@ -128,7 +128,7 @@ class Worker(object):
                 sys.exit(0)
 
             reloader_cls = reloader_engines[self.cfg.reload_engine]
-            self.reloader = reloader_cls(extra_files=self.cfg.reload_extra_files,
+            self.reloader = reloader_cls(extra_files=self.cfg.reload_watch_files,
                                          callback=changed)
 
         self.load_wsgi()
